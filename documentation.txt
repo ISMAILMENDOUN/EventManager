@@ -1,0 +1,5 @@
+color palette:
+
+blue:0,123,255
+
+orange:253,126,20
