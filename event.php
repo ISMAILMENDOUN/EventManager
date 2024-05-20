@@ -76,39 +76,7 @@ if(isset($_GET['eventUser'])){
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
-
-
-
-
-
-
-
-
-
 
 
 <!DOCTYPE html>
@@ -121,7 +89,7 @@ if(isset($_GET['eventUser'])){
 </head>
 <body>
 
-  <div class="container">
+  <div class="container pb-5">
     <div class="row mt-5">
 
     <?php
@@ -132,19 +100,22 @@ $quer=mysqli_query($con,"select * from event");
 
 while($r=mysqli_fetch_array($quer)){
   if($r[0]==$event){
+    $dt=new dateTime($r[3]);
+   $dt=$dt->format('Y-m-d').' At '.$dt->format('H:i');
       echo'<div class="col-md-6">
-        <img src="images/'.$r[1].'" class="img-fluid" alt="Product Image">
+        <img width="450" height="450"src="images/'.$r[1].'" class="img-fluid" alt="Product Image">
       </div>
       <div class="col-md-6">
         <h2 class="mt-4">'.$r[4].'</h2>
         <p class="text-muted">Category: Category Name</p>
         <p>'.$r[2].'</p>
-        <p class="lead">'.$r[3].'</p>
+        
+        <p class="lead">Date :'.$dt.'</p>
         </div>';}}
         session_start();
         if(!isset($_SESSION['firstName'])&&!isset($_SESSION['lastName'])&&!isset($_SESSION['email'])){
         ?>
-
+      <h2 class="mt-3">Subscribtion Form:</h2>
         <form action="event.php" method="POST">
       <div class="form-group">
         <label for="fullName">First Name</label>
@@ -165,8 +136,10 @@ while($r=mysqli_fetch_array($quer)){
       </div>
       <br>
       <input name ="eventId"type="hidden" value="<?php echo$_GET['event'];?>">
-      <button type="submit" class="btn btn-primary">Register</button>
+      <button type="submit" class="btn btn-dark">Register</button>
     </form>
+        
+
     <?php }else{$event=$_GET['event'];echo'<a href="event.php?eventUser='.$event.'">Register</a>';} ?>
         <a href="index.php">Go Back</a>
       </div>

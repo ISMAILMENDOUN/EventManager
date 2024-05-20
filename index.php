@@ -10,15 +10,21 @@ $hide=0;
     <title>Home</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
+    <script src="https://kit.fontawesome.com/f124013f63.js" crossorigin="anonymous"></script>
+
+  </head>
 <body>
 
-<nav class="navbar navbar-light bg-light justify-content-center">
-    <a href="userSign.php">MyEvents<a>
-    <form class="form-inline " action="index.php" method="GET">
-   <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search Event" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+<nav class="navbar navbar-light bg-light justify-content-space-between">
+<a class="navbar-brand mt-0" href="index.php">
+    <img src="images/logo.svg" width="340" height="70" class="d-inline-block align-left" alt="">
+   
+  </a>
+    <form class="form-inline mt-3 " action="index.php" method="GET">
+   <input name="search" class="form-control mr-sm-2 border border-dark" type="search" placeholder="Search Event" aria-label="Search">
+    <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
   </form>
+  <a class="text-dark" href="userSign.php"><i class="fa-solid fa-calendar-days"></i> MyEvents<a>
 </nav>
 <div class="container">
 <section class="searchResults">
@@ -36,22 +42,24 @@ $hide=1;
       $query=mysqli_query($con,"select * from event");
       $empty=true;
 while($row=mysqli_fetch_array($query)){
-  if($row[4]===$input){
-      echo'<div class="col-md-4">
+  if((strtolower($row[4])===strtolower($input))||array_intersect(explode(" ",strtolower($input)),explode(" ",strtolower($row[4])))){
+      $words = explode(' ', $row["description"]);
+$truncated_description = implode(' ', array_slice($words, 0, 10));
+      echo'<div class="col-md-4 mt-2 mb-2">
         <a href="event.php?event='.$row[0].'"><div class="card">
-          <img class="card-img-top" src="images/'.$row["image"].'" alt="Event 1">
+          <img class="card-img-top" width="400" height="300"src="images/'.$row["image"].'" alt="Event 1">
           <div class="card-body">
-            <h5 class="card-title">'.$row["name"].'</h5>
-            <p class="card-text">'.$row["description"].'</p>
-            <a href="#" class="btn btn-primary">View Details</a>
+            <h5 class="card-title text-dark">'.$row["name"].'</h5>
+            <p class="card-text text-dark d-inline-block mw-5 mh-5">'.$truncated_description.'...</p>
+            <p class="btn btn-dark">View Details</p>
           </div>
         </div>
-      </div>';
+      </div></a>';
       $empty=false;}}
       if($empty==true){
 
         echo'<h2>0 result</h2>';
-        echo'<h3>  <a href="user.php">Go Back</a></h3>';
+        echo'<h3>  <a href="index.php">Go Back</a></h3>';
       }}
       
       ?>
@@ -76,16 +84,18 @@ while($row=mysqli_fetch_array($query)){
       $query=mysqli_query($con,"select * from event");
 
 while($row=mysqli_fetch_array($query)){
-      echo'<div class="col-md-4">
+  $words = explode(' ', $row["description"]);
+$truncated_description = implode(' ', array_slice($words, 0, 10));
+      echo'<div class="col-md-4 mt-2 mb-2">
         <a href="event.php?event='.$row[0].'"><div class="card">
-          <img class="card-img-top" src="images/'.$row["image"].'" alt="Event 1">
+          <img class="card-img-top" width="400" height="300"src="images/'.$row["image"].'" alt="Event 1">
           <div class="card-body">
-            <h5 class="card-title">'.$row["name"].'</h5>
-            <p class="card-text">'.$row["description"].'</p>
-            <a href="#" class="btn btn-primary">View Details</a>
+            <h5 class="card-title text-dark">'.$row["name"].'</h5>
+            <p class="card-text text-dark d-inline-block mw-5 mh-5">'.$truncated_description.'...</p>
+            <p class="btn btn-dark">View Details</p>
           </div>
         </div>
-      </div>';}
+      </div></a>';}
       ?>
       </div>
 <!--<div class="card" style="width: 18rem;">

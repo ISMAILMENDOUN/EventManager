@@ -58,16 +58,23 @@ else{
       $query=mysqli_query($con,"select * from event");
 
 while($row=mysqli_fetch_array($query)){
-      echo'<div class="col-md-4">
-        <a href="eventManage.php?event='.$row[0].'"><div class="card">
-          <img class="card-img-top" src="images/'.$row["image"].'" alt="Event 1">
-          <div class="card-body">
-            <h5 class="card-title">'.$row["name"].'</h5>
-            <p class="card-text">'.$row["description"].'</p>
-            <a href="#" class="btn btn-primary">View Details</a>
+  $words = explode(' ', $row["description"]);
+  $truncated_description = implode(' ', array_slice($words, 0, 10));
+        echo'<div class="col-md-4 mt-2 mb-2">
+          <a href="eventManage.php?event='.$row[0].'"><div class="card">
+            <img class="card-img-top" width="400" height="300"src="images/'.$row["image"].'" alt="Event 1">
+            <div class="card-body">
+              <h5 class="card-title text-dark">'.$row["name"].'</h5>
+              <p class="card-text text-dark d-inline-block mw-5 mh-5">'.$truncated_description.'...</p>
+              <p class="btn btn-dark">View Details</p>
+            </div>
           </div>
-        </div>
-      </div>';}
+        </div></a>';}
+
+      
+
+
+      
       ?>
       
       <!-- Add more event cards here -->
@@ -89,9 +96,9 @@ while($row=mysqli_fetch_array($query)){
       </div>
       <div class="form-group">
         <label for="eventDate">Event Date</label>
-        <input name="eventDate"type="date" class="form-control" id="eventDate">
+        <input name="eventDate"type="datetime-local" class="form-control" id="eventDate">
       </div>
-      <button type="submit" class="btn btn-primary">Add Event</button>
+      <button type="submit" class="btn btn-dark">Add Event</button>
     </form>
     </section>
   </div>

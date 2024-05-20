@@ -38,6 +38,7 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
         mysqli_stmt_bind_param($req, "sss", $firstName, $lastName, $email);
         mysqli_stmt_execute($req);
         mysqli_stmt_bind_result($req, $idUser);
+       
         mysqli_stmt_fetch($req);
         mysqli_stmt_close($req);
 
@@ -52,8 +53,8 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
         echo "Error: " . mysqli_error($con);
     }
 
-    mysqli_close($con);
-}
+    mysqli_close($con);}
+  
 ?>
  
 
@@ -68,7 +69,7 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
+<!--<div class="container">
     <div class="row mt-5">
 <form action="userSign.php" method="POST">
       <div class="form-group">
@@ -92,9 +93,113 @@ if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['ema
         <a href="index.php">Go Back</a>
       </div>
     </div>
+  </div>-->
+  <div class="container py-5 ">
+    <div class="row justify-content-right mt-5 ">
+    <div class="col-md-6 offset-md-4 ">
+<form class=""action="userSign.php" method="POST">
+      <div class="form-group ">
+        <label for="fullName">First Name</label>
+        <input style="width: 250px; height: 40px;" name="firstName" type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+      </div>
+      <div class="form-group">
+        <label for="fullName">Last Name</label>
+        <input style="width: 250px; height: 40px;" name="lastName" type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input style="width: 250px; height: 40px;" name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email">
+        
+      </div>
+      
+      <br>
+      <input style="width: 250px; height: 40px;" name ="eventId"type="hidden" value="<?php// echo$_GET['event'];?>">
+      <button type="submit" class="btn btn-dark">Check My Events</button>
+    </form>
+        <a href="index.php">Go Back</a>
+      </div>
+</div>
+    </div>
   </div>
-
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

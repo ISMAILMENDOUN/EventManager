@@ -1,7 +1,8 @@
 
 <?php
-
-if(isset($_GET['idR'])){
+ use PHPMailer\PHPMailer\PHPMailer;
+ use PHPMailer\PHPMailer\Exception;
+if(isset($_GET['idR']) ){
 
   $con=mysqli_connect("localhost","root","","events");
     $idRegistration=$_GET['idR'];
@@ -13,20 +14,42 @@ if(isset($_GET['idR'])){
           //exit();
          
           
-          
+  /*****************************phpMailer */        
 
-$to = "ismail.mendoun@gmail.com";
-$subject = "Test mail";
-$message = "Your subscription to the event has been accepted.";
-$headers = "From: sender@example.com";
+  
+ 
+  
+  require 'vendor/autoload.php';
+  
+  $mail = new PHPMailer(true);
+  
+  try {
+      $mail->isSMTP();
+      $mail->Host = 'live.smtp.mailtrap.io';
+      $mail->SMTPAuth = true;
+      $mail->Username = 'api'; 
+      $mail->Password = '49773e5dad8419d3911a4d4476d32f12'; 
+      $mail->SMTPSecure = 'tls';
+      $mail->Port = 2525;
+  
+      $mail->setFrom('mailtrap@demomailtrap.com', 'dev'); 
+      $mail->addAddress($_GET['eU']); 
+      $mail->isHTML(true);
+      $mail->Subject = 'Confirmation2';
+      $mail->Body    = 'I\'m very delighted to confirm your subscription to the event.';
+  
+      $mail->send();
+      echo '<script>console.log("Mail sent successfully");</script>';
+  } catch (Exception $e) {
+      echo "<script>console.log('Mail sending failed: {$mail->ErrorInfo}');</script>";
 
 
-if (mail($to, $subject, $message, $headers)) {
-    echo "Mail sent successfully.";
-} else {
-    echo "Mail sending failed.";
-}
+      
+  }
 
+  
+
+  /*****************************phpMailer */  
 
 }
       
@@ -49,6 +72,7 @@ if (mail($to, $subject, $message, $headers)) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Description</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/f124013f63.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -276,10 +300,10 @@ while($r=mysqli_fetch_array($quer)){
         <p class="lead">'.$r[3].'</p>
 
        
-        </div> <a href="eventManage.php?delete='.$r[0].'">DELETE</a>
+        </div><div> <a class="text-danger" href="eventManage.php?delete='.$r[0].'"><i class="fa-solid fa-trash"></i> DELETE</a>
       
-        </div> <a href="eventManage.php?update='.$r[0].'">UPDATE</a>';}}
-        echo'<a href="manageEvent.php">Go Back</a>';}
+        </div> <div><a class="text-success" href="eventManage.php?update='.$r[0].'"><i class="fa-sharp fa-solid fa-pen"></i> UPDATE</a></div>';}}
+        echo'<br><a href="manageEvent.php">Go Back</a>';}
 
         mysqli_close($con);
 
@@ -339,8 +363,15 @@ while($r=mysqli_fetch_array($quer)){
       <td>'.$r['phone'].'</td>
       <td>'.$r['dateRegistration'].'</td>
       <td>'.$r['statut'].'</td>
-      <td><a href="eventManage.php?idR='.$r['idRegistrtion'].'&eU='.$r['email'].'">Accept</a></td>
+      <td><a id="accept" href="eventManage.php?idR='.$r['idRegistrtion'].'&eU='.$r['email'].'&event='.$event.'">Accept</a></td>
     </tr>';
+    if($r['statut']=="accepted"){
+      echo'<script>
+      document.getElementById("accept").style.display="none";</script>';
+      
+     
+
+    }
         echo '</tr>';
        
         
